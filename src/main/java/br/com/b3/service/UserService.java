@@ -24,9 +24,10 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	/**
 	 * Método responsável por retornar um usuario de acordo com o id informado
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -66,6 +67,16 @@ public class UserService {
 
 		User obj = repo.findOne(id);
 		return obj;
+	}
+
+	/**
+	 * Método responsável por consultar um usuáro por login informado
+	 * 
+	 * @param login
+	 * @return
+	 */
+	public User findByLogin(String login) {
+		return repo.findByLogin(login);
 	}
 
 	/**
@@ -110,8 +121,9 @@ public class UserService {
 		user.setLogin(objDto.getLogin());
 		user.setFirstName(objDto.getFirstName());
 		user.setPassword(passwordEncoder.encode(objDto.getPassword()));
+		//user.setPassword(objDto.getPassword());
 		user.setPhone(objDto.getPhone());
-		
+
 		return user;
 	}
 }
