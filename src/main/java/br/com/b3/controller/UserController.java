@@ -30,33 +30,48 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
-	
-	
+
 	/**
-	 * Metodo responsável por consultar um usuario por Id informado.
+	 * Metodo responsável por atualizar um usuario de acordo com o id informado.
+	 * @param objDto
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody UserDTO objDto, @PathVariable Long id) {
+
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+
+	/**
+	 * Metodo responsável por consultar um usuario por Id informado.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> find(@PathVariable Long id) {
 		User obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	/**
 	 * Metodo responsavel por registrar/cadastrar um usuario na aplicacao
+	 * 
 	 * @param usuario
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> registrar(@Valid @RequestBody UserDTO userDTO){
-		
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> registrar(@Valid @RequestBody UserDTO userDTO) {
+
 		User obj = service.fromDTO(userDTO);
-		
+
 		service.insert(obj);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
@@ -72,6 +87,7 @@ public class UserController {
 
 	/**
 	 * Método responsável por deletar um usuario de acordo com o seu id informado.
+	 * 
 	 * @param id
 	 * @return
 	 */
