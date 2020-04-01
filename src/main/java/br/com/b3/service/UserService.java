@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.b3.dto.UserDTO;
 import br.com.b3.entity.User;
 import br.com.b3.repository.UserRepository;
 
@@ -21,8 +22,8 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 
-	//@Autowired
-	//private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * Método responsável por listar todos os usuarios do banco de dados.
@@ -41,7 +42,7 @@ public class UserService {
 	 */
 	public User insert(User obj) {
 		obj.setId(null); // força um insert
-		//obj.setPassword(passwordEncoder.encode(obj.getPassword()));
+		// obj.setPassword(passwordEncoder.encode(obj.getPassword()));
 		repo.save(obj);
 		return obj;
 	}
@@ -83,5 +84,25 @@ public class UserService {
 
 		newObj.setId(obj.getId());
 		newObj.setLogin(obj.getLogin());
+	}
+
+	/**
+	 * Converte um objeto DTO para User
+	 * 
+	 * @param objDto
+	 * @return
+	 */
+	public User fromDTO(UserDTO objDto) {
+
+		User user = new User();
+		user.setEmail(objDto.getEmail());
+		user.setId(objDto.getId());
+		user.setLastName(objDto.getLastName());
+		user.setLogin(objDto.getLogin());
+		user.setFirstName(objDto.getFirstName());
+		user.setPassword(passwordEncoder.encode(objDto.getPassword()));
+		user.setPhone(objDto.getPhone());
+		
+		return user;
 	}
 }

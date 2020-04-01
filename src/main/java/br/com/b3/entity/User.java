@@ -15,13 +15,14 @@ import javax.persistence.TemporalType;
 
 /**
  * Classe responsável por representar um usuario no sistema.
+ * 
  * @author j.a.vasconcelos
  *
  */
 @Entity
 @Table(name = "TB_USER")
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,31 +30,31 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	@Column(name = "FIRST_NAME")
-	private String nome;
-	
+	private String firstName;
+
 	@Column(name = "LAST_NAME")
 	private String lastName;
-	
+
 	@Column(name = "EMAIL", unique = true)
 	private String email;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "BIRTHDAY")
 	private Date birthday;
-	
+
 	@Column(name = "LOGIN", unique = true)
 	private String login;
-	
+
 	@Column(name = "PASSWORD")
 	private String password;
-	
+
 	@Column(name = "PHONE")
 	private String phone;
-	
+
 	public User() {
-	
+
 	}
 
 	public Long getId() {
@@ -64,12 +65,12 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {

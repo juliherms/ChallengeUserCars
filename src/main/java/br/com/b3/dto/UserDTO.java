@@ -27,7 +27,7 @@ public class UserDTO implements Serializable {
 
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 4 e 10 caracteres")
-	private String lasName;
+	private String lastName;
 
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Email
@@ -62,13 +62,13 @@ public class UserDTO implements Serializable {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
-	public String getLasName() {
-		return lasName;
+	
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLasName(String lasName) {
-		this.lasName = lasName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.b3.controller.exception.FieldMessage;
 import br.com.b3.controller.validation.annotation.UserInsert;
 import br.com.b3.dto.UserDTO;
-import br.com.b3.entity.User;
 import br.com.b3.repository.UserRepository;
 
 /**
@@ -34,14 +33,17 @@ public class UserInsertValidator implements ConstraintValidator<UserInsert, User
 	/**
 	 * Verifica a entrada de um usuarios válido.
 	 */
-	
+
 	public boolean isValid(UserDTO value, ConstraintValidatorContext context) {
 
 		List<FieldMessage> list = new ArrayList<FieldMessage>();
 
-		User user = repo.findByLogin(value.getLogin());
-		if (user != null) {
+		if (repo.findByLogin(value.getLogin()) != null) {
 			list.add(new FieldMessage("login", "Login already exists"));
+		}
+
+		if (repo.findByEmail(value.getEmail()) != null) {
+			list.add(new FieldMessage("email", "Email already exists"));
 		}
 
 		for (FieldMessage e : list) {

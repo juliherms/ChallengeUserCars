@@ -22,5 +22,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 */
 	@Transactional(readOnly=true)
 	User findByLogin(String login);
+	
+	/**
+	 * Método responsável por pesquisar um usuario pelo email informado.
+	 * @param email
+	 * @return
+	 */
+	User findByEmail(String email);
 
 }
