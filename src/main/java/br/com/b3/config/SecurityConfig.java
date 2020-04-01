@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,11 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
 
 	private static final String[] PUBLIC_MATCHERS = { "/api/users/**" };
+
+	private static final String[] PUBLIC_MATCHERS_POST = { "/api/signin/**" };
 
 	/**
 	 * Configura as permissões de acesso aos endpoints
@@ -45,12 +47,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		for (String string : PUBLIC_MATCHERS) {
-			LOG.info("Urls  públicas - " + string);
+			LOG.info("Urls  publicas - " + string);
 		}
+		
+		for (String string : PUBLIC_MATCHERS_POST) {
+			LOG.info("Urls POST  publicas - " + string);
+		}
+		
 
 		http.cors().and().csrf().disable();
 
-		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
+		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
+				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll().anyRequest().authenticated();
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
