@@ -2,9 +2,9 @@
 
 Aplicação criada utilizando as tecnologias Spring boot e Angular
 
-Sistema responsálve por cadastrar usuarios e carros.
+Sistema responsável por cadastrar usuarios e carros.
 
-## Built With
+## Construído com:
 
 - [Spring Boot](https://spring.io/projects/spring-boot) - Responsável por criar o microserviço e realizar o seu processamento e persistência.
 - [Maven](https://maven.apache.org/) - Ferramenta de build automático.
