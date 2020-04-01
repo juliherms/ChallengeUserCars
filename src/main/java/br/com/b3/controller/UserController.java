@@ -31,6 +31,18 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	
+	/**
+	 * Metodo responsável por consultar um usuario por Id informado.
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<User> find(@PathVariable Long id) {
+		User obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	/**
 	 * Metodo responsavel por registrar/cadastrar um usuario na aplicacao
 	 * @param usuario

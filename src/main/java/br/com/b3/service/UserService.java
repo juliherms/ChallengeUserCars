@@ -24,6 +24,15 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	/**
+	 * Método responsável por retornar um usuario de acordo com o id informado
+	 * @param id
+	 * @return
+	 */
+	public User find(Long id) {
+		return repo.findOne(id);
+	}
 
 	/**
 	 * Método responsável por listar todos os usuarios do banco de dados.
