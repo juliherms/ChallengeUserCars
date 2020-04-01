@@ -16,9 +16,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import br.com.b3.security.JwtAuthenticationEntryPoint;
+import br.com.b3.security.JwtAuthenticationTokenFilter;
 
 /**
  * Classe responsável por configurar as url's de segurança do sistema.
@@ -33,6 +37,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
+
+	@Autowired
+	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+		authenticationManagerBuilder.userDetailsService(this.userDetailsService)
+				.passwordEncoder(bCryptPasswordEncorder());
+	}
+
+	@Bean
+	public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+		return new JwtAuthenticationTokenFilter();
+	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
 
@@ -49,18 +67,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		for (String string : PUBLIC_MATCHERS) {
 			LOG.info("Urls  publicas - " + string);
 		}
-		
+
 		for (String string : PUBLIC_MATCHERS_POST) {
 			LOG.info("Urls POST  publicas - " + string);
 		}
-		
 
-		http.cors().and().csrf().disable();
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
 
 		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll().anyRequest().authenticated();
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		http.headers().cacheControl();
 
 	}
 

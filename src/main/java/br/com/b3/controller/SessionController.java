@@ -1,5 +1,7 @@
 package br.com.b3.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +28,7 @@ import br.com.b3.service.UserService;
  *
  */
 @RestController
-@RequestMapping(value = "/api/signin")
+@RequestMapping(value = "/api")
 public class SessionController {
 
 	@Autowired
@@ -41,7 +43,12 @@ public class SessionController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	@RequestMapping(method = RequestMethod.POST)
+	/**
+	 * Método responsável por realizar o login no sistema
+	 * @param credenciaisDTO
+	 * @return
+	 */
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody CredenciaisDTO credenciaisDTO) {
 
 		final Authentication authentication = authenticationManager.authenticate(
@@ -57,4 +64,20 @@ public class SessionController {
 
 		return ResponseEntity.ok(new CurrentUserDTO(token, user));
 	}
+
+	/**
+	 * Método responsável por retornar as informações de um usuário logado.
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/me", method = RequestMethod.GET)
+	public ResponseEntity<User> me(HttpServletRequest request) {
+		
+		String token = request.getHeader("Authorization");
+        String login = jwtTokenUtil.getUsernameFromToken(token);
+        User user = userService.findByLogin(login);
+		
+		return ResponseEntity.ok().body(user);
+	}
+
 }
