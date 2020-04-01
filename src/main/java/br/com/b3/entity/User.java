@@ -1,17 +1,25 @@
 package br.com.b3.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Classe responsável por representar um usuario no sistema.
@@ -40,6 +48,7 @@ public class User implements Serializable {
 	@Column(name = "EMAIL", unique = true)
 	private String email;
 
+	@JsonFormat(pattern="dd/MM/yyyy hh:mm")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "BIRTHDAY")
 	private Date birthday;
@@ -47,14 +56,36 @@ public class User implements Serializable {
 	@Column(name = "LOGIN", unique = true)
 	private String login;
 
+	@JsonIgnore()
 	@Column(name = "PASSWORD")
 	private String password;
 
 	@Column(name = "PHONE")
 	private String phone;
 
+	@JsonFormat(pattern="dd/MM/yyyy hh:mm")
+	@Column(name = "LAST_LOGIN")
+	@Temporal(TemporalType.DATE)
+	private Date lastLogin;
+
+
+	@JsonIgnore()
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	private List<Car> cars = new ArrayList<Car>();
+
 	public User() {
 
+	}
+	
+	public void addCar(Car car) {
+		
+		car.setUser(this);
+		
+		if(this.cars == null) {
+			this.cars = new ArrayList<Car>();
+		}
+		
+		cars.add(car);
 	}
 
 	public Long getId() {
@@ -119,6 +150,22 @@ public class User implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
 	}
 
 	@Override

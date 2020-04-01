@@ -1,6 +1,8 @@
 package br.com.b3.controller;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -33,6 +35,7 @@ public class UserController {
 
 	/**
 	 * Metodo responsável por atualizar um usuario de acordo com o id informado.
+	 * 
 	 * @param objDto
 	 * @param id
 	 * @return
@@ -81,8 +84,13 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> findAll() {
-		return ResponseEntity.ok(service.findAll());
+	public ResponseEntity<List<UserDTO>> findAll() {
+
+		List<User> list = service.findAll();
+
+		List<UserDTO> listDto = list.stream().map(obj -> new UserDTO(obj)).collect(Collectors.toList());
+
+		return ResponseEntity.ok(listDto);
 	}
 
 	/**

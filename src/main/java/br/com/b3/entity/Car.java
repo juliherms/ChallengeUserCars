@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +30,10 @@ public class Car implements Serializable {
 	@Column(name = "ID")
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	@Column(name = "YEAR")
 	private int year;
 
@@ -82,6 +88,14 @@ public class Car implements Serializable {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

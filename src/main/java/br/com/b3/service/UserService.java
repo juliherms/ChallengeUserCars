@@ -1,13 +1,17 @@
 package br.com.b3.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.b3.dto.CarDTO;
 import br.com.b3.dto.UserDTO;
+import br.com.b3.entity.Car;
 import br.com.b3.entity.User;
+import br.com.b3.repository.CarRepository;
 import br.com.b3.repository.UserRepository;
 
 /**
@@ -21,9 +25,26 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repo;
+	
+	@Autowired
+	private CarRepository carRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	/**
+	 * Método responsavel por salvar o último login do usuario.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public User saveLastLogin(Long id) {
+
+		User obj = repo.findOne(id);
+		obj.setLastLogin(new Date());
+
+		return repo.save(obj);
+	}
 
 	/**
 	 * Método responsável por retornar um usuario de acordo com o id informado
@@ -52,8 +73,14 @@ public class UserService {
 	 */
 	public User insert(User obj) {
 		obj.setId(null); // força um insert
-		// obj.setPassword(passwordEncoder.encode(obj.getPassword()));
 		repo.save(obj);
+		
+		for (Car car : obj.getCars()) {
+			
+			carRepository.save(car);
+			
+		}
+		
 		return obj;
 	}
 
@@ -105,7 +132,7 @@ public class UserService {
 		newObj.setId(obj.getId());
 		newObj.setLogin(obj.getLogin());
 	}
-
+	
 	/**
 	 * Converte um objeto DTO para User
 	 * 
@@ -121,9 +148,19 @@ public class UserService {
 		user.setLogin(objDto.getLogin());
 		user.setFirstName(objDto.getFirstName());
 		user.setPassword(passwordEncoder.encode(objDto.getPassword()));
-		//user.setPassword(objDto.getPassword());
 		user.setPhone(objDto.getPhone());
-
+		
+		for (CarDTO carDTO : objDto.getCars()) {
+			
+			Car car = new Car();
+			car.setColor(carDTO.getColor());
+			car.setLicensePlate(carDTO.getLicensePlate());
+			car.setModel(carDTO.getModel());
+			car.setYear(carDTO.getYear());
+			
+			user.addCar(car);
+		}
+	
 		return user;
 	}
 }

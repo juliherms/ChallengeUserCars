@@ -1,12 +1,16 @@
 package br.com.b3.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.b3.controller.validation.annotation.UserInsert;
+import br.com.b3.entity.Car;
+import br.com.b3.entity.User;
 
 /**
  * Classe representa um DTO para validação dos dados de entrada
@@ -46,6 +50,37 @@ public class UserDTO implements Serializable {
 
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String phone;
+	
+	List<CarDTO> Cars = new ArrayList<CarDTO>();
+	
+
+	public UserDTO() {
+	
+	}
+
+	public UserDTO(User user) {
+		super();
+		this.id = user.getId();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.email = user.getEmail();
+	//	this.birthday = user.getBirthday();
+		this.login = user.getLogin();
+	//	this.password = user.getP;
+		this.phone = user.getPhone();
+		
+		List<CarDTO> list = new ArrayList<CarDTO>();
+		
+		for (Car car : user.getCars()) {
+			
+			CarDTO obj = new CarDTO(car);
+			list.add(obj);
+		}
+		
+		this.Cars = list;
+		
+	}
+
 
 	public Long getId() {
 		return id;
@@ -109,6 +144,14 @@ public class UserDTO implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public List<CarDTO> getCars() {
+		return Cars;
+	}
+
+	public void setCars(List<CarDTO> cars) {
+		Cars = cars;
 	}
 
 }

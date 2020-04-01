@@ -61,6 +61,8 @@ public class SessionController {
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		final User user = userService.findByLogin(credenciaisDTO.getLogin());
 		user.setPassword(null);
+		
+		userService.saveLastLogin(user.getId());
 
 		return ResponseEntity.ok(new CurrentUserDTO(token, user));
 	}
