@@ -47,39 +47,38 @@ public class UsuarioRepositoryTest {
 		user.setLogin("juliherms");
 		user.setPassword("123456");
 		user.setPhone("5581999999999");
-		
+
 		repo.save(user);
-		
+
 	}
-	
+
 	/**
 	 * Apaga todos os registros após cada ciclo de teste
 	 */
 	@After
-    public final void tearDown() {
+	public final void tearDown() {
 		repo.deleteAll();
 	}
-	
+
 	/**
 	 * Metodo responsavel por testar a pesquisa de um usuario por login
 	 */
 	@Test
 	public void testPesquisarUsuarioPorLogin() {
-		
+
 		User obj = repo.findByLogin("juliherms");
-		
+
 		assertTrue(obj.getLogin().equals("juliherms"));
-		
+
 	}
-	
-	
-	
+
 	/**
-	 * Metodo responsávle por tentar realizar um cadastro de um usuario com login ja existente
+	 * Metodo responsávle por tentar realizar um cadastro de um usuario com login ja
+	 * existente
 	 */
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testCadastroUsuarioComMesmoLogin() {
-		
+
 		User user = new User();
 		user.setBirthday(new Date());
 		user.setEmail("Marcos@gmail.com");
@@ -91,13 +90,13 @@ public class UsuarioRepositoryTest {
 
 		repo.save(user);
 	}
-	
+
 	/**
 	 * Método responsável por tentar cadastrar um usuario com um email ja existente
 	 */
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testCadastroUsuarioComMesmoEmail() {
-		
+
 		User user = new User();
 		user.setBirthday(new Date());
 		user.setEmail("juliherms@gmail.com");
@@ -110,13 +109,13 @@ public class UsuarioRepositoryTest {
 		repo.save(user);
 
 	}
-	
+
 	/**
 	 * Testa a inclusão de um usuario no sistema
 	 */
 	@Test
 	public void testCadastroUsuarioSucesso() {
-		
+
 		User user = new User();
 		user.setBirthday(new Date());
 		user.setEmail("juliherms1@gmail.com");
@@ -125,9 +124,9 @@ public class UsuarioRepositoryTest {
 		user.setLogin("juliherms1");
 		user.setPassword("1234561");
 		user.setPhone("5581999999999");
-		
+
 		repo.save(user);
-		
+
 		assertTrue(user.getId() > 0);
 	}
 
