@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.b3.dto.CarDTO;
 import br.com.b3.entity.Car;
 import br.com.b3.repository.CarRepository;
 import br.com.b3.repository.UserRepository;
@@ -38,4 +39,40 @@ public class CarService {
 
 		return repo.findByUser(userRepository.findByLogin(userSS.getUsername()));
 	}
+
+	/**
+	 * Converte um objeto DTO para Car
+	 * 
+	 * @param objDto
+	 * @return
+	 */
+	public Car fromDTO(CarDTO objDto) {
+
+		Car car = new Car();
+		car.setColor(objDto.getColor());
+		car.setLicensePlate(objDto.getLicensePlate());
+		car.setModel(objDto.getModel());
+		car.setYear(objDto.getYear());
+		
+		return car;
+	}
+	
+	/**
+	 * Método responsável por persistir um carro
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public Car insert(Car obj) {
+		
+		UserSS userSS = AuthUtil.authenticated();
+		
+        obj.setUser(userRepository.findByLogin(userSS.getUsername())); 
+		
+		obj.setId(null); // força um insert
+		repo.save(obj);
+		
+		return obj;
+	}
 }
+	

@@ -76,11 +76,8 @@ public class UserService {
 		repo.save(obj);
 		
 		for (Car car : obj.getCars()) {
-			
 			carRepository.save(car);
-			
 		}
-		
 		return obj;
 	}
 
