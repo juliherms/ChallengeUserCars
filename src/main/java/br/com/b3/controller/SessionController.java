@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.b3.controller.response.Error;
+import br.com.b3.controller.response.Response;
 import br.com.b3.dto.CredenciaisDTO;
 import br.com.b3.dto.CurrentUserDTO;
 import br.com.b3.entity.User;
@@ -51,6 +53,15 @@ public class SessionController {
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody CredenciaisDTO credenciaisDTO) {
 
+		
+		Response<String> response = new Response<String>();
+		
+		if(userService.findByLogin(credenciaisDTO.getLogin()) == null) {
+			
+			response.getErrors().add(new Error("Invalid login or password", 1));
+			return ResponseEntity.badRequest().body(response);
+		}
+		
 		final Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(credenciaisDTO.getLogin(), credenciaisDTO.getPassword()));
 

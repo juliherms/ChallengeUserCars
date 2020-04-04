@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.b3.controller.response.Error;
 import br.com.b3.controller.response.Response;
 import br.com.b3.dto.UserDTO;
 import br.com.b3.entity.User;
@@ -106,7 +107,7 @@ public class UserController {
 		User obj = service.findById(id);
 
 		if (obj == null) {
-			response.getErrors().add("Usuario não encontrado:" + id);
+			response.getErrors().add(new Error("Usuário não encontrado", 1));
 			return ResponseEntity.badRequest().body(response);
 		}
 
