@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.b3.controller.validation.annotation.UserInsert;
 import br.com.b3.entity.Car;
 import br.com.b3.entity.User;
 
@@ -50,12 +49,11 @@ public class UserDTO implements Serializable {
 
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String phone;
-	
+
 	List<CarDTO> Cars = new ArrayList<CarDTO>();
-	
 
 	public UserDTO() {
-	
+
 	}
 
 	public UserDTO(User user) {
@@ -64,23 +62,22 @@ public class UserDTO implements Serializable {
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
 		this.email = user.getEmail();
-	//	this.birthday = user.getBirthday();
+		// this.birthday = user.getBirthday();
 		this.login = user.getLogin();
-	//	this.password = user.getP;
+		// this.password = user.getP;
 		this.phone = user.getPhone();
-		
+
 		List<CarDTO> list = new ArrayList<CarDTO>();
-		
+
 		for (Car car : user.getCars()) {
-			
+
 			CarDTO obj = new CarDTO(car);
 			list.add(obj);
 		}
-		
-		this.Cars = list;
-		
-	}
 
+		this.Cars = list;
+
+	}
 
 	public Long getId() {
 		return id;
@@ -97,7 +94,7 @@ public class UserDTO implements Serializable {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}

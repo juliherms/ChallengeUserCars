@@ -18,7 +18,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.b3.controller.response.Error;
 import br.com.b3.controller.response.Response;
 import br.com.b3.dto.UserDTO;
+import br.com.b3.entity.Car;
 import br.com.b3.entity.User;
+import br.com.b3.service.CarService;
 import br.com.b3.service.UserService;
 
 /**
@@ -33,6 +35,9 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+
+	@Autowired
+	private CarService carService;
 
 	/**
 	 * Metodo responsável por atualizar um usuario de acordo com o id informado.
@@ -75,9 +80,9 @@ public class UserController {
 
 		User obj = service.fromDTO(userDTO);
 
-		ValdateUpdateUser(obj, response);
-		
-		if(!response.getErrors().isEmpty()) {
+		ValdateUpdateUser(obj, response, false);
+
+		if (!response.getErrors().isEmpty()) {
 			return ResponseEntity.badRequest().body(response);
 		}
 
@@ -123,14 +128,24 @@ public class UserController {
 		return ResponseEntity.ok(new Response<String>());
 	}
 
-	private void ValdateUpdateUser(User user, Response<String> response) {
+	private void ValdateUpdateUser(User user, Response<String> response, boolean isUpdate) {
 
 		if (service.findByLogin(user.getLogin()) != null) {
+
 			response.getErrors().add(new Error("Login already exists", 3));
 		}
 
 		if (service.findByEmail(user.getEmail()) != null) {
 			response.getErrors().add(new Error("Email already exists", 2));
+		}
+
+		if (!user.getCars().isEmpty()) {
+			for (Car car : user.getCars()) {
+
+				if (carService.findByLicensePlate(car.getLicensePlate()) != null) {
+					response.getErrors().add(new Error("License plate already exists", 3));
+				}
+			}
 		}
 
 	}

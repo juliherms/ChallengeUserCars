@@ -89,6 +89,15 @@ public class CarService {
 
 		return repo.findByUserAndId(user, id);
 	}
+	
+	/**
+	 * Método responsável por retornar um carro de acordo com a placa informada.
+	 * @param licensePlate
+	 * @return
+	 */
+	public Car findByLicensePlate(String licensePlate) {
+		return repo.findByLicensePlate(licensePlate);
+	}
 
 	/**
 	 * Método responsavel por deletar um carro.

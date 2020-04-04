@@ -32,4 +32,11 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 	 */
 	Car findByUserAndId(User user,Long id);
 	
+	/**
+	 * Retorna um carro de acordo com a placa informada.
+	 * @param licensePlate
+	 * @return
+	 */
+	Car findByLicensePlate(String licensePlate);
+	
 }
