@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.b3.controller.response.Response;
 import br.com.b3.dto.CarDTO;
 import br.com.b3.entity.Car;
 import br.com.b3.service.CarService;
@@ -76,5 +77,27 @@ public class CarController {
 		Car obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	/**
+	 * Método responsável por deletar um carro de acordo com o seu id informado.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Response<String>> delete(@PathVariable Long id) {
+		Response<String> response = new Response<String>();
+
+		Car obj = service.find(id);
+
+		if (obj == null) {
+			response.getErrors().add("Carro não encontrado:" + id);
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		service.delete(id);
+		return ResponseEntity.ok(new Response<String>());
+	}
+
 
 }

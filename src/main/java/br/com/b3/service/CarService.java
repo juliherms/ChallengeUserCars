@@ -89,4 +89,21 @@ public class CarService {
 
 		return repo.findByUserAndId(user, id);
 	}
+
+	/**
+	 * Método responsavel por deletar um carro.
+	 * 
+	 * @param id
+	 */
+	public void delete(Long id) {
+
+		Car car = repo.findOne(id);
+		User user = userRepository.findByLogin(car.getUser().getLogin());
+
+		user.getCars().remove(car);
+
+		userRepository.save(user);
+
+		repo.delete(car);
+	}
 }
