@@ -69,9 +69,17 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> registrar(@Valid @RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> registrar(@Valid @RequestBody UserDTO userDTO) {
+
+		Response<String> response = new Response<String>();
 
 		User obj = service.fromDTO(userDTO);
+
+		ValdateUpdateUser(obj, response);
+		
+		if(!response.getErrors().isEmpty()) {
+			return ResponseEntity.badRequest().body(response);
+		}
 
 		service.insert(obj);
 
@@ -113,6 +121,18 @@ public class UserController {
 
 		service.delete(id);
 		return ResponseEntity.ok(new Response<String>());
+	}
+
+	private void ValdateUpdateUser(User user, Response<String> response) {
+
+		if (service.findByLogin(user.getLogin()) != null) {
+			response.getErrors().add(new Error("Login already exists", 3));
+		}
+
+		if (service.findByEmail(user.getEmail()) != null) {
+			response.getErrors().add(new Error("Email already exists", 2));
+		}
+
 	}
 
 }

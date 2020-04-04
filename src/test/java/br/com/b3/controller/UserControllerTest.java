@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
  * Classe responsável por testar as chamadas de endpoint da api/users
+ * 
  * @author j.a.vasconcelos
  *
  */
@@ -29,15 +30,38 @@ public class UserControllerTest {
 
 	/**
 	 * Metodo responsável por testar a criação de um usuario via endpoint
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@WithMockUser
-	public void testCriarUsuariValido() throws Exception {
+	public void testCriarUsuarioValido() throws Exception {
 
 		String content = "{\"firstName\": \"Hello\",\"lastName\": \"World\",\"email\": \"hello@world.com\",\"birthday\": \"1990-05-01\",\"login\": \"hello.world\",\"password\": \"h3ll0\",\"phone\": \"988888888\",\"cars\": [{\"year\": 2018,\"licensePlate\": \"PDV-0625\",\"model\": \"Audi\",\"color\": \"White\"}]}";
 
 		mvc.perform(MockMvcRequestBuilders.post("/api/users").contentType(MediaType.APPLICATION_JSON_VALUE)
 				.content(content)).andExpect(MockMvcResultMatchers.status().isCreated());
+	}
+
+	/**
+	 * Metodo responsável por testar a criação de um usuario via endpoint com o
+	 * mesmo login.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	@WithMockUser
+	public void testCriarUsuarioComMesmoLogin() throws Exception {
+
+		String content = "{\"firstName\": \"Juliherms\",\"lastName\": \"Vasconcelos\",\"email\": \"j.a.vasconcelos321@gmail.com\",\"birthday\": \"1990-05-01\",\"login\": \"juliherms\",\"password\": \"h3ll0\",\"phone\": \"988888888\",\"cars\": [{\"year\": 2018,\"licensePlate\": \"PDV-0626\",\"model\": \"Audi\",\"color\": \"White\"}]}";
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/users").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(content)).andExpect(MockMvcResultMatchers.status().isCreated());
+
+		String content1 = "{\"firstName\": \"Hello\",\"lastName\": \"World\",\"email\": \"juliherms@gmail.com\",\"birthday\": \"1991-05-01\",\"login\": \"juliherms\",\"password\": \"h3ll0\",\"phone\": \"988888888\",\"cars\": [{\"year\": 2018,\"licensePlate\": \"PDV-0626\",\"model\": \"Audi\",\"color\": \"White\"}]}";
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/users").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(content1)).andExpect(MockMvcResultMatchers.status().isBadRequest());
+
 	}
 }

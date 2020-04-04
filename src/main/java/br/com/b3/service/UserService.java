@@ -102,6 +102,15 @@ public class UserService {
 	public User findByLogin(String login) {
 		return repo.findByLogin(login);
 	}
+	
+	/**
+	 * Método responsável por consultar um usuário por email informado.
+	 * @param email
+	 * @return
+	 */
+	public User findByEmail(String email) {
+		return repo.findByEmail(email);
+	}
 
 	/**
 	 * Método responsavel por deletar um usuario.
@@ -139,10 +148,10 @@ public class UserService {
 	public User fromDTO(UserDTO objDto) {
 
 		User user = new User();
-		user.setEmail(objDto.getEmail());
+		user.setEmail(objDto.getEmail().toLowerCase());
 		user.setId(objDto.getId());
 		user.setLastName(objDto.getLastName());
-		user.setLogin(objDto.getLogin());
+		user.setLogin(objDto.getLogin().toLowerCase());
 		user.setFirstName(objDto.getFirstName());
 		user.setPassword(passwordEncoder.encode(objDto.getPassword()));
 		user.setPhone(objDto.getPhone());
