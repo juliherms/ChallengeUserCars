@@ -23,5 +23,13 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 	 * @return
 	 */
 	List<Car> findByUser(User user);
+
+	/**
+	 * Retorna um carro por id e usuario informado.
+	 * @param user usuario logado
+	 * @param id identifador do carro
+	 * @return
+	 */
+	Car findByUserAndId(User user,Long id);
 	
 }

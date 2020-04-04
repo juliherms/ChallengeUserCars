@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ import br.com.b3.entity.Car;
 import br.com.b3.service.CarService;
 
 /**
- * Representa um controller de carros 
+ * Representa um controller de carros
  * 
  * @author j.a.vasconcelos
  *
@@ -27,10 +28,10 @@ import br.com.b3.service.CarService;
 @RestController
 @RequestMapping(value = "/api/cars")
 public class CarController {
-	
+
 	@Autowired
 	private CarService service;
-	
+
 	/**
 	 * Metodo responsavel por listar todos os carros do usuario logado.
 	 * 
@@ -40,12 +41,12 @@ public class CarController {
 	public ResponseEntity<List<CarDTO>> findAll() {
 
 		List<Car> list = service.findByUser();
-		
+
 		List<CarDTO> listDTO = list.stream().map(obj -> new CarDTO(obj)).collect(Collectors.toList());
 
 		return ResponseEntity.ok(listDTO);
 	}
-	
+
 	/**
 	 * Metodo responsavel por cadastrar um carro de acordo com o usuario logado
 	 * 
@@ -63,6 +64,17 @@ public class CarController {
 		return ResponseEntity.created(uri).build();
 	}
 
-
+	/**
+	 * Metodo responsável por consultar um carro por Id informado de acordo com o
+	 * usuario logado
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Car> find(@PathVariable Long id) {
+		Car obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.b3.dto.CarDTO;
 import br.com.b3.entity.Car;
+import br.com.b3.entity.User;
 import br.com.b3.repository.CarRepository;
 import br.com.b3.repository.UserRepository;
 import br.com.b3.security.AuthUtil;
@@ -53,10 +54,10 @@ public class CarService {
 		car.setLicensePlate(objDto.getLicensePlate());
 		car.setModel(objDto.getModel());
 		car.setYear(objDto.getYear());
-		
+
 		return car;
 	}
-	
+
 	/**
 	 * Método responsável por persistir um carro
 	 * 
@@ -64,15 +65,28 @@ public class CarService {
 	 * @return
 	 */
 	public Car insert(Car obj) {
-		
+
 		UserSS userSS = AuthUtil.authenticated();
-		
-        obj.setUser(userRepository.findByLogin(userSS.getUsername())); 
-		
+
+		obj.setUser(userRepository.findByLogin(userSS.getUsername()));
+
 		obj.setId(null); // força um insert
 		repo.save(obj);
-		
+
 		return obj;
 	}
+
+	/**
+	 * Método responsável por retornar um carro de acordo com o id informado
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Car find(Long id) {
+
+		UserSS userSS = AuthUtil.authenticated();
+		User user = userRepository.findByLogin(userSS.getUsername());
+
+		return repo.findByUserAndId(user, id);
+	}
 }
-	

@@ -14,3 +14,4 @@ Sistema responsável por cadastrar usuarios e carros.
 - [Mockito](https://site.mockito.org/) - Ferramenta utilizada para realizar mock de objetos referente a limitação de ambiente(dev,teste e produção).
 - [Docker](https://www.docker.com/) - Ferramenta utilizada para simular o ambiente de testes de forma íntegra.
 - [Insominia](https://insomnia.rest/) - Ferramenta utilizada para realizar testes de chamadas via rest.
+- [Jenkins] (https://jenkins.io/)
