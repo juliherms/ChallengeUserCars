@@ -1,9 +1,5 @@
 package br.com.b3.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +71,7 @@ public class SessionController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		final User user = userService.findByLogin(credenciaisDTO.getLogin());
-		user.setPassword(null);
-
+		
 		
 		userService.saveLastLogin(user.getId());
 
