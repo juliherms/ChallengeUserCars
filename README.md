@@ -15,6 +15,7 @@ Sistema responsável por cadastrar usuarios e carros.
 - [Docker](https://www.docker.com/) - Ferramenta utilizada para simular o ambiente de testes de forma íntegra.
 - [Insominia](https://insomnia.rest/) - Ferramenta utilizada para realizar testes de chamadas via rest.
 - [Jenkins](https://jenkins.io/) - Ferramenta responsável pela execução da automatização de testes e integração contínua.
+- [Angular](https://angular.io/) - Framework responsável pela construção de interface gráfica em HTML e CSS.
 
 
 ## Executando o projeto:
