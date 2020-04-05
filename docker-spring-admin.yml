@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  server-admin:
+    image: server-admin:v1
+    ports:
+      - 8080:8080
+    networks:
+      - redeteste
+
+networks:
+  redeteste:
+    driver: bridge

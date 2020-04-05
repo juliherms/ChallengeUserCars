@@ -19,6 +19,22 @@ Sistema responsável por cadastrar usuarios e carros.
 
 ## Executando o projeto:
 
+## Executando com o Docker:
+
+- Realizar o clone do [github](https://github.com/juliherms/ChallengeUserCars);
+- Realizar a instalação das dependências com o seguinte comando:
+
+```sh
+$ mvn clean package
+```
+
+- Cria um Docker com o Java 1.8 e executa a aplicação na porta 8080.
+
+```sh
+$ docker build -t server-admin:v1 .
+$ docker-compose -f docker-spring-admin.yml up
+```
+
 ## Executando o Jenkins:
 
 - Executar os respectivos comando abaixo para criar a imagem do jenkins no Docker:
