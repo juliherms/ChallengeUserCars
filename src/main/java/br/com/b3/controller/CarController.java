@@ -56,7 +56,7 @@ public class CarController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> create(@Valid @RequestBody CarDTO carDTO) {
+	public ResponseEntity<?> create(@Valid @RequestBody CarDTO carDTO) {
 
 		Car obj = service.fromDTO(carDTO);
 

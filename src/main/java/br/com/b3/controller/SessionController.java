@@ -47,21 +47,21 @@ public class SessionController {
 
 	/**
 	 * Método responsável por realizar o login no sistema
+	 * 
 	 * @param credenciaisDTO
 	 * @return
 	 */
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody CredenciaisDTO credenciaisDTO) {
+	public ResponseEntity<Response<?>> createAuthenticationToken(@RequestBody CredenciaisDTO credenciaisDTO) {
 
-		
-		Response<String> response = new Response<String>();
-		
-		if(userService.findByLogin(credenciaisDTO.getLogin()) == null) {
-			
+		Response<CurrentUserDTO> response = new Response<CurrentUserDTO>();
+
+		if (userService.findByLogin(credenciaisDTO.getLogin()) == null) {
+
 			response.getErrors().add(new Error("Invalid login or password", 1));
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+
 		final Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(credenciaisDTO.getLogin(), credenciaisDTO.getPassword()));
 
@@ -71,25 +71,27 @@ public class SessionController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		final User user = userService.findByLogin(credenciaisDTO.getLogin());
-		
-		
+
 		userService.saveLastLogin(user.getId());
 
-		return ResponseEntity.ok(new CurrentUserDTO(token, user));
+		response.setData(new CurrentUserDTO(token, user));
+		return ResponseEntity.ok(response);
+
 	}
 
 	/**
 	 * Método responsável por retornar as informações de um usuário logado.
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/me", method = RequestMethod.GET)
 	public ResponseEntity<User> me(HttpServletRequest request) {
-		
+
 		String token = request.getHeader("Authorization");
-        String login = jwtTokenUtil.getUsernameFromToken(token);
-        User user = userService.findByLogin(login);
-		
+		String login = jwtTokenUtil.getUsernameFromToken(token);
+		User user = userService.findByLogin(login);
+
 		return ResponseEntity.ok().body(user);
 	}
 

@@ -7,7 +7,8 @@ import br.com.b3.entity.Car;
 public class CarDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private Long id;
 	private Integer year;
 	private String licensePlate;
 	private String model;
@@ -16,10 +17,20 @@ public class CarDTO implements Serializable {
 	public CarDTO() {}
 
 	public CarDTO(Car car) {
+		this.id = car.getId();
 		this.year = car.getYear();
 		this.licensePlate = car.getLicensePlate();
 		this.model = car.getModel();
 		this.color = car.getColor();
+	}
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getYear() {
