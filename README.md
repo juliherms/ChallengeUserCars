@@ -6,6 +6,14 @@ Sistema responsável por cadastrar usuarios e carros.
 
 ## Requisitos:
 
+- RF01 - Implementação do endpoint de autenticação
+- RF02 - Implementação do endpoint de usuarios
+- RF03 - Implementação do endpoint de carros
+
+- RN01 - Implementação do docker
+- RN02 - Autalização do readme
+- RN03 - Publicação no heroku
+
 ## Construído com:
 
 - [Spring Boot](https://spring.io/projects/spring-boot) - Responsável por criar o microserviço e realizar o seu processamento e persistência.
