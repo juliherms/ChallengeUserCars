@@ -19,7 +19,7 @@ Sistema responsável por cadastrar usuarios e carros.
 
 ## Executando o projeto:
 
-## Executando sem o Docker(ter o jdk 1.8 instalado ná maquina):
+## Executando sem o Docker(ter o jdk 1.8 instalado na máquina):
 
 ```sh
 $ mvn spring-boot:run
