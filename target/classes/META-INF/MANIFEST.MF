@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: j.a.vasconcelos
+Build-Jdk: 11.0.6
+Implementation-Title: Sistema de Usuￃﾡrio de Veￃﾭculos
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: br.com.b3
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/Carros/
+Created-By: Maven Integration for Eclipse
+
