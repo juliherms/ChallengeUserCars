@@ -19,7 +19,7 @@ Sistema responsável por cadastrar usuarios e carros.
 
 ## Executando o projeto:
 
-# Executando o Jenkins:
+## Executando o Jenkins:
 
 - Executar os respectivos comando abaixo para criar a imagem do jenkins no Docker:
 
@@ -28,3 +28,7 @@ $ cd docker
 $ docker build -t jenkins_juliherms:latest .
 $ docker-compose -f docker-jenkins.yml up
 ```
+
+- Você pode configurar o script de pipeline que se encontra no diretório pipeline/ . O resultado será o descrito abaixo:
+
+<img src="screen/jenkins_pipeline.png">
