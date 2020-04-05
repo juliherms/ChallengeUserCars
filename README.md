@@ -17,9 +17,14 @@ Sistema responsável por cadastrar usuarios e carros.
 - [Jenkins](https://jenkins.io/) - Ferramenta responsável pela execução da automatização de testes e integração contínua.
 
 
+## Executando o projeto:
 
--- criando a imagem do jenkins no docker
-docker build -t jenkins_juliherms:latest .
+# Executando o Jenkins:
 
--- executando a imagem do docker
-docker-compose -f docker-jenkins.yml up
+- Executar os respectivos comando abaixo para criar a imagem do jenkins no Docker:
+
+```sh
+$ cd docker
+$ docker build -t jenkins_juliherms:latest .
+$ docker-compose -f docker-jenkins.yml up
+```
