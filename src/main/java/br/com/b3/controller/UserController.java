@@ -147,7 +147,5 @@ public class UserController {
 				}
 			}
 		}
-
 	}
-
 }
