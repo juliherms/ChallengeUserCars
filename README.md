@@ -79,8 +79,6 @@ $ ng serve -o
 
 <img src="screen/angular.png">
 
-<img src="screen/angular2.png">
-
 ## Publicação
 
 - Voce pode acessar a API publicada no heroku neste link : https://usuarioscarros.herokuapp.com/api/users
