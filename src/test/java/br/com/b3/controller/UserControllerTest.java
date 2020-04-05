@@ -1,5 +1,6 @@
 package br.com.b3.controller;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import br.com.b3.repository.UserRepository;
 
 /**
  * Classe responsável por testar as chamadas de endpoint da api/users
@@ -27,6 +30,9 @@ public class UserControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
+	
+	@Autowired
+	private UserRepository repo;
 
 	/**
 	 * Metodo responsável por testar a criação de um usuario via endpoint
@@ -63,5 +69,13 @@ public class UserControllerTest {
 		mvc.perform(MockMvcRequestBuilders.post("/api/users").contentType(MediaType.APPLICATION_JSON_VALUE)
 				.content(content1)).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
+	}
+	
+	/**
+	 * Apaga todos os registros após cada ciclo de teste
+	 */
+	@After
+	public final void tearDown() {
+		repo.deleteAll();
 	}
 }

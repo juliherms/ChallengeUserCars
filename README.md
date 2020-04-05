@@ -15,3 +15,11 @@ Sistema responsável por cadastrar usuarios e carros.
 - [Docker](https://www.docker.com/) - Ferramenta utilizada para simular o ambiente de testes de forma íntegra.
 - [Insominia](https://insomnia.rest/) - Ferramenta utilizada para realizar testes de chamadas via rest.
 - [Jenkins](https://jenkins.io/) - Ferramenta responsável pela execução da automatização de testes e integração contínua.
+
+
+
+-- criando a imagem do jenkins no docker
+docker build -t jenkins_juliherms:latest .
+
+-- executando a imagem do docker
+docker-compose -f docker-jenkins.yml up
