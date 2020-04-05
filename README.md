@@ -58,3 +58,8 @@ $ docker-compose -f docker-jenkins.yml up
 - Você pode configurar o script de pipeline que se encontra no diretório pipeline/ . O resultado será o descrito abaixo:
 
 <img src="screen/jenkins_pipeline.png">
+
+
+## Publicação
+
+- Voce pode acessar a API publicada no heroku neste link(https://usuarioscarros.herokuapp.com/api/users)
