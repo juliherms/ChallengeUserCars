@@ -61,13 +61,15 @@ $ docker-compose -f docker-jenkins.yml up
 
 ## Frontend
 
+- Realizar o clone do [github](https://github.com/juliherms/ChallengeUserCars);
+- Realizar a instalação das dependências com o seguinte comando:
 
 ```sh
+$ npm install
 $ ng serve -o
-$ docker-compose -f docker-spring-admin.yml up
 ```
 
-
+<img src="screen/angular.png">
 
 ## Publicação
 
