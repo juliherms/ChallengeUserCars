@@ -14,8 +14,11 @@ Sistema responsável por cadastrar usuarios e carros.
 - [Mockito](https://site.mockito.org/) - Ferramenta utilizada para realizar mock de objetos referente a limitação de ambiente(dev,teste e produção).
 - [Docker](https://www.docker.com/) - Ferramenta utilizada para simular o ambiente de testes de forma íntegra.
 - [Insominia](https://insomnia.rest/) - Ferramenta utilizada para realizar testes de chamadas via rest.
+- [Insominia](https://swagger.io/) - Ferramenta utilizada para documentação da API construída neste projeto.
 - [Jenkins](https://jenkins.io/) - Ferramenta responsável pela execução da automatização de testes e integração contínua.
 - [Angular](https://angular.io/) - Framework responsável pela construção de interface gráfica em HTML e CSS.
+- [Heroku](https://www.heroku.com/) - Plataforma cloud utilizada para realizar o deploy do frontend e backend.
+
 
 
 ## Executando o projeto:
