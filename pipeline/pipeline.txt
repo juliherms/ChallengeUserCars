@@ -1,0 +1,23 @@
+node {
+   def mvnHome
+   stage('Git Clone') {
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/juliherms/ChallengeUserCars.git']]])
+      mvnHome = tool 'm1'
+   }
+
+   stage('Install Microservice') {
+       sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install  "
+   }
+
+   stage('Build Deploy docker Microservice') {
+       dir('microservice_docker') {
+		 sh "docker build -t server-admin:v1 ."		
+       }
+   }
+
+    stage('Deploy') {
+      dir('microservice_docker') {
+		sh "docker stack deploy --compose-file docker-spring-admin.yml spring_admin  "
+      }
+    }
+}
