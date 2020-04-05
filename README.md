@@ -19,6 +19,12 @@ Sistema responsável por cadastrar usuarios e carros.
 
 ## Executando o projeto:
 
+## Executando sem o Docker(ter o jdk 1.8 instalado ná maquina):
+
+```sh
+$ mvn spring-boot:run
+```
+
 ## Executando com o Docker:
 
 - Realizar o clone do [github](https://github.com/juliherms/ChallengeUserCars);
@@ -28,7 +34,7 @@ Sistema responsável por cadastrar usuarios e carros.
 $ mvn clean package
 ```
 
-- Cria um Docker com o Java 1.8 e executa a aplicação na porta 8080.
+- Cria um Docker com o Java 1.8 e executar a aplicação na porta 8080.
 
 ```sh
 $ docker build -t server-admin:v1 .
