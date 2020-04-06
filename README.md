@@ -93,7 +93,7 @@ $ ng serve -o
 
 ## Solução
 
-- A aplicação foi desenvolvida com o spring boot fazendo uso de suas injeções de dependências, spring data e o jackson para conversão dos objetos em json.
+- A aplicação foi desenvolvida com o spring boot fazendo uso de suas injeções de dependências, spring data e o jackson para conversão dos objetos em json. 
 - Fiz uso do docker tanto para publicar a solução com o servidor tomcat embutido e bem como instância o jenkins e criar a sua pipeline.
 - Foi implementado teste unitários e testes integrados 
 - A pipeline do Jenkins é responsável por executar todos os testes e realizar deploy em container docker
