@@ -57,6 +57,29 @@ public class CarService {
 
 		return car;
 	}
+	
+	/**
+	 * Método responsável por atualizar um carro
+	 * 
+	 * @param obj - carro
+	 * @return carro atualizado.
+	 */
+	public Car update(Car obj) {
+		
+		Car newObj = repo.findOne(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
+	private void updateData(Car newObj, Car obj) {
+
+		newObj.setId(obj.getId());
+		newObj.setColor(obj.getColor());
+		newObj.setLicensePlate(obj.getLicensePlate());
+		newObj.setModel(obj.getModel());
+		newObj.setYear(obj.getYear());
+	}
+
 
 	/**
 	 * Método responsável por persistir um carro

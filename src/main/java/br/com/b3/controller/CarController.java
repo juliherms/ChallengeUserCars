@@ -118,6 +118,24 @@ public class CarController {
 		return ResponseEntity.ok(new Response<String>());
 	}
 
+	/**
+	 * Metodo responsável por atualizar um carro de acordo com o id informado.
+	 * 
+	 * @param objDto
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody CarDTO objDto, @PathVariable Long id) {
+
+		Car obj = service.fromDTO(objDto);
+
+		obj.setId(id);
+		obj = service.update(obj);
+
+		return ResponseEntity.noContent().build();
+	}
+
 	private void ValdateUpdateCar(Car carro, Response<String> response, boolean isUpdate) {
 
 		if (service.findByLicensePlate(carro.getLicensePlate()) != null) {
