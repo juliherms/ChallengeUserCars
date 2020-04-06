@@ -94,20 +94,21 @@ $ ng serve -o
 ## Solução
 
 - A aplicação foi desenvolvida com o spring boot fazendo uso de suas injeções de dependências, spring data e o jackson para conversão dos objetos em json. 
-- Fiz uso do docker tanto para publicar a solução com o servidor tomcat embutido e bem como instância o jenkins e criar a sua pipeline.
-- Foi implementado teste unitários e testes integrados 
+- Fiz uso do docker tanto para publicar a solução com o servidor tomcat embutido e bem como instanciar o jenkins e criar a sua pipeline.
+- Foi implementado testes unitários e testes integrados 
 - A pipeline do Jenkins é responsável por executar todos os testes e realizar deploy em container docker
-- Com a utlização do Swagger é possível que qualquer interessado em integra com o microserviço tenha o conhecimento dos endpoints e parâmetros necessários.
+- Com a utlização do Swagger é possível que qualquer interessado em integrar com o microserviço tenha o conhecimento dos endpoints e parâmetros necessários.
+- Para base de dados foi utilizando o H2 no profile de test. Enfatizo este ponto, pois é possível configurar outros profiles como dev ou prod e apontar o application.properties para outro banco.
 
 ## Considerações
 
-- Para esta API foi utilizado o framework spring boot, uma das vantagens deste microframework  é a facilidade para criar mocroserviços de forma independente
+- Para esta API foi utilizado o framework spring boot, uma das vantagens deste microframework é a facilidade para criar mocroserviços de forma independente
 utilizando o mínimo do spring. O fato de ter o tomcat já embutido ajuda bastante.
 
 - Para testes unitários foi utilizado o junit, já para testes de integração foi utilizado o mock mvc. O build o Maven é responsável por executar os testes da aplicação, ou seja o build 
 somente será disponibilizado se a aplicação passar por todos os testes implementados.
 
-- Em relação ao ambiente foi utilizado o Docker com o objetivo de isolar a instalação e execução do programa. O Jenkins é a ferrmenta responsável por automatizar o Delivery com o conceito de CI e CD através
+- Em relação ao ambiente foi utilizado o Docker com o objetivo de isolar a instalação e execução do programa. O Jenkins é a ferramenta responsável por automatizar o Delivery com o conceito de CI e CD através
 da pipeline implementada.
 
 - Também foi utilizado o heroku para publicação da nossa API na nuvem. O grande segredo para publicar neste host é basicamente o arquivo procfile.
