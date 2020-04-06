@@ -81,6 +81,6 @@ $ ng serve -o
 
 ## Publicação
 
-- Voce pode acessar a API publicada no heroku neste link : https://usuarioscarros.herokuapp.com/api/users
-
+- Você pode acessar a API publicada no heroku neste link : https://usuarioscarros.herokuapp.com/api/users
+- Também foi criado um frontend básico para acesso a API, link: https://carrosweb.herokuapp.com/login
 
