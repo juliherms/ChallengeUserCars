@@ -102,7 +102,7 @@ $ ng serve -o
 
 ## Considerações
 
-- Para esta API foi utilizado o framework spring boot, uma das vantagens deste microframework é a facilidade para criar mocroserviços de forma independente
+- Para esta API foi utilizado o framework spring boot, uma das vantagens deste microframework é a facilidade para criar microserviços de forma independente
 utilizando o mínimo do spring. O fato de ter o tomcat já embutido ajuda bastante.
 
 - Para testes unitários foi utilizado o junit, já para testes de integração foi utilizado o mock mvc. O build o Maven é responsável por executar os testes da aplicação, ou seja o build 
