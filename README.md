@@ -67,6 +67,12 @@ $ docker-compose -f docker-jenkins.yml up
 
 <img src="screen/jenkins_pipeline.png">
 
+## Documentação API
+
+- Acessar a segunte url: http://localhost:8080/swagger-ui.html
+
+<img src="screen/swagger.png">
+
 ## Frontend
 
 - Realizar o clone do [github](https://github.com/juliherms/ChallengeUserCars);
