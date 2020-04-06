@@ -63,9 +63,9 @@ public class CarController {
 	public ResponseEntity<?> create(@Valid @RequestBody CarDTO carDTO) {
 
 		Response<String> response = new Response<String>();
-		
+
 		Car obj = service.fromDTO(carDTO);
-		
+
 		ValdateUpdateCar(obj, response, false);
 
 		if (!response.getErrors().isEmpty()) {
@@ -86,9 +86,15 @@ public class CarController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Car> find(@PathVariable Long id) {
+	public ResponseEntity<Response<Car>> find(@PathVariable Long id) {
+
+		Response<Car> response = new Response<Car>();
+
 		Car obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
+
+		response.setData(obj);
+
+		return ResponseEntity.ok(response);
 	}
 
 	/**
