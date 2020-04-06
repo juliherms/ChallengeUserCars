@@ -9,6 +9,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Classe responsável por representar um usuario no sistema.
@@ -29,6 +34,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "TB_USER")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = { "createdAt" }, allowGetters = true)
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,7 +55,7 @@ public class User implements Serializable {
 	@Column(name = "EMAIL", unique = true)
 	private String email;
 
-	@JsonFormat(pattern="dd/MM/yyyy hh:mm")
+	@JsonFormat(pattern = "dd/MM/yyyy hh:mm")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "BIRTHDAY")
 	private Date birthday;
@@ -63,28 +70,33 @@ public class User implements Serializable {
 	@Column(name = "PHONE")
 	private String phone;
 
-	@JsonFormat(pattern="dd/MM/yyyy hh:mm")
+	@JsonFormat(pattern = "dd/MM/yyyy hh:mm")
 	@Column(name = "LAST_LOGIN")
 	@Temporal(TemporalType.DATE)
 	private Date lastLogin;
 
-
 	@JsonIgnore()
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Car> cars = new ArrayList<Car>();
+
+	@JsonFormat(pattern = "dd/MM/yyyy hh:mm")
+	@Column(nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
+	private Date createdAt;
 
 	public User() {
 
 	}
-	
+
 	public void addCar(Car car) {
-		
+
 		car.setUser(this);
-		
-		if(this.cars == null) {
+
+		if (this.cars == null) {
 			this.cars = new ArrayList<Car>();
 		}
-		
+
 		cars.add(car);
 	}
 
@@ -166,6 +178,14 @@ public class User implements Serializable {
 
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override
