@@ -41,13 +41,13 @@ public class CarController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Response<List<CarDTO>>> findAll() {
-		
+
 		Response<List<CarDTO>> response = new Response<List<CarDTO>>();
-		
+
 		List<Car> list = service.findByUser();
 
 		List<CarDTO> listDTO = list.stream().map(obj -> new CarDTO(obj)).collect(Collectors.toList());
-		
+
 		response.setData(listDTO);
 
 		return ResponseEntity.ok(response);
@@ -62,7 +62,15 @@ public class CarController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> create(@Valid @RequestBody CarDTO carDTO) {
 
+		Response<String> response = new Response<String>();
+		
 		Car obj = service.fromDTO(carDTO);
+		
+		ValdateUpdateCar(obj, response, false);
+
+		if (!response.getErrors().isEmpty()) {
+			return ResponseEntity.badRequest().body(response);
+		}
 
 		service.insert(obj);
 
@@ -102,6 +110,14 @@ public class CarController {
 
 		service.delete(id);
 		return ResponseEntity.ok(new Response<String>());
+	}
+
+	private void ValdateUpdateCar(Car carro, Response<String> response, boolean isUpdate) {
+
+		if (service.findByLicensePlate(carro.getLicensePlate()) != null) {
+
+			response.getErrors().add(new Error("License plate already exists", 3));
+		}
 	}
 
 }
